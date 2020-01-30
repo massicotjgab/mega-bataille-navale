@@ -1,5 +1,7 @@
 # Mega bataille navale
 
+Ce dépot est basé sur le dépot https://github.com/vpoulailleau/mega-bataille-navale
+
 ## Jeu
 
 * Méga bataille navale
