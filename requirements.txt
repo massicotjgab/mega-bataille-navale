@@ -1,2 +1,1 @@
-To set up the virtual environnement, the following packages are required :
-pytest
+pytest==5.3.5
