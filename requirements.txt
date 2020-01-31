@@ -1,1 +1,2 @@
 To set up the virtual environnement, the following packages are required :
+pytest
