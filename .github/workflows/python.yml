@@ -1,0 +1,19 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [master]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install python dependancies
+      run: |
+        sudo pip3 install -r requirements.txt
+    - name: Run tests on ${{ matrix.python-version }}
+      run: pytest -v
