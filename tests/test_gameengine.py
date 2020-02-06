@@ -1,7 +1,11 @@
 from GameEngine.GameEngine import Cube
+from GameEngine.GameEngine import Joueur
+
 
 def test():
     assert 2 > 1
+
+########################################### Test Zone de jeu
 
 def test_tire_bateau():
     test = Cube(15, 15, 3)
@@ -31,3 +35,15 @@ def test_double_tire_eau():
     test.place_bateau("porte_container", 3, 2, 10, 2, 1)
     test.tirer(0, 0)
     assert test.tirer(0, 0) == (4, 'XX')
+
+
+######################################### Test Joueur
+
+def test_get_pseudo():
+    joueur1 = Joueur("toto")
+    assert joueur1.get_pseudo() == "toto"
+
+def test_change_pseudo():
+    joueur1 = Joueur("toto")
+    joueur1.change_pseudo("titi")
+    assert joueur1.get_pseudo() == "titi"
