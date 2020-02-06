@@ -1,6 +1,6 @@
-import pprint
+from pprint import pprint
 
-class Cube:
+class Plateau:
 
     def __init__(self, x, y, z):
         self.x = x
@@ -43,6 +43,24 @@ class Cube:
                         return False
         return True
 
+    def check_any_exist(self, type):
+        for x in range(self.x):
+            for y in range(self.y):
+                for z in range(self.z):
+                    if self.cube[z][y][x] == type :
+                        return True
+        return False
+
+    def get_xyz(self, x, y, z):
+        return self.cube[z][y][x]
+
+    def set_xyz(self, x, y, z, value):
+        self.cube[z][y][x] = value
+
+    def print_zone(self):
+        pprint(self.cube)
+
+
 
 class Joueur:
     def __init__(self, nom):
@@ -54,26 +72,44 @@ class Joueur:
     def change_pseudo(self, nom):
         self.pseudo = nom
 
+class Bateau:
+    def __init__(self, nom, x, y):
+        self.x = x
+        self.y = y
+        self.emplacement = [[0 for k in range(x)] for j in range(y)]
+        self.niveau = 0
+        self.name = nom
 
+
+    def change_position(self, Plateau, niveau):
+        self.emplacement = Plateau
+        self.niveau = niveau
+        for x_temp in range(self.x):
+            for y_temp in range(self.y):
+                if self.emplacement[y_temp][x_temp] != 0:
+                    self.emplacement[y_temp][x_temp] = self.name
+
+
+    def place_bateau(self, zone_de_jeu):
+        for x_temp in range(self.x):
+            for y_temp in range(self.y):
+                if self.emplacement[y_temp][x_temp] != 0:
+                    zone_de_jeu.set_xyz(x_temp, y_temp, self.niveau, self.name)
 
 
 def main():
-    zone_de_jeu = Cube(15, 15, 3)
-    Joueur1 = Joueur("Cocasticox")
-    Joueur2 = Joueur("Lacoutt")
-    print()
+    zone_de_jeu = Plateau(15, 15, 3)
+    Bateau1 = Bateau("Porte_container", 15, 15)
 
-    print(zone_de_jeu.check_vide())
-    zone_de_jeu.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    print(zone_de_jeu.check_vide())
-    print(zone_de_jeu.tirer(10, 2))
+    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
+    Plateau_temp[2][10] = "Sous_marin"
+    Plateau_temp[3][10] = "Sous_marin"
+    Plateau_temp[2][11] = "Sous_marin"
+    Plateau_temp[3][11] = "Sous_marin"
 
-    print(zone_de_jeu.tirer(10, 2))
-
-    #pprint.pprint(zone_de_jeu.cube)
-
-
-
+    Bateau1.change_position(Plateau_temp, 0)
+    Bateau1.place_bateau(zone_de_jeu)
+    zone_de_jeu.print_zone()
 
 
 if __name__ == ('__main__'):
