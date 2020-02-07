@@ -96,20 +96,101 @@ class Bateau:
                 if self.emplacement[y_temp][x_temp] != 0:
                     zone_de_jeu.set_xyz(x_temp, y_temp, self.niveau, self.name)
 
+class Partie:
+    def __init__(self, joueur1, joueur2, x, y, z):
+        self.joueur1 = Joueur(joueur1)
+        self.joueur2 = Joueur(joueur2)
+        self.plateau_joueur1 = Plateau(x, y, z)
+        self.plateau_joueur2 = Plateau(x, y, z)
+
+    def get_pseudo_joueur1(self):
+        return self.joueur1.get_pseudo()
+
+    def get_pseudo_joueur2(self):
+        return self.joueur2.get_pseudo()
+
+    def setup_joueur1(self, nom, plateau, niveau):
+        placement = Bateau(nom, 15, 15)
+        placement.change_position(plateau, niveau)
+        placement.place_bateau(self.plateau_joueur1)
+        print(f"{nom} placé par {self.joueur1.get_pseudo()}")
+
+    def setup_joueur2(self, nom, plateau, niveau):
+        placement = Bateau(nom, 15, 15)
+        placement.change_position(plateau, niveau)
+        placement.place_bateau(self.plateau_joueur2)
+        print(f"{nom} placé par {self.joueur2.get_pseudo()}")
+
+    def tir_joueur1(self, x, y):
+        (niveau, state) = self.plateau_joueur2.tirer(x, y)
+        if niveau == 4:
+            if state == 'X':
+                print("Coup dans l'eau !")
+            elif state == 'XX':
+                print("Tu as déjà tiré ici !")
+        else:
+            if self.plateau_joueur2.check_any_exist(state) == False:
+                print(f"Tu as coulé un {state} au niveau {niveau} !")
+            else :
+                print(f"Tu as touché un {state} au niveau {niveau} !")
+
+        if self.plateau_joueur2.check_vide() == True:
+            print("Plus aucun bateau adverse !")
+            return True
+        else :
+            return False
+
+    def tir_joueur2(self, x, y):
+        (niveau, state) = self.plateau_joueur1.tirer(x, y)
+        if niveau == 4:
+            if state == 'X':
+                print("Coup dans l'eau !")
+            elif state == 'XX':
+                print("Tu as déjà tiré ici !")
+        else:
+            if self.plateau_joueur1.check_any_exist(state) == False:
+                print(f"Tu as coulé un {state} au niveau {niveau} !")
+            else :
+                print(f"Tu as touché un {state} au niveau {niveau} !")
+
+        if self.plateau_joueur1.check_vide() == True:
+            print("Plus aucun bateau adverse !")
+            return True
+        else :
+            return False
+
+
+
+
 
 def main():
-    zone_de_jeu = Plateau(15, 15, 3)
-    Bateau1 = Bateau("Porte_container", 15, 15)
+    NewGame = Partie("Cocasticox", "Lacoutt", 15, 15, 3)
 
     Plateau_temp = [[0 for k in range(15)] for j in range(15)]
-    Plateau_temp[2][10] = "Sous_marin"
-    Plateau_temp[3][10] = "Sous_marin"
-    Plateau_temp[2][11] = "Sous_marin"
-    Plateau_temp[3][11] = "Sous_marin"
+    Plateau_temp[3][7] = "X"
+    #Plateau_temp[3][10] = "X"
+    #Plateau_temp[2][11] = "X"
+    #Plateau_temp[3][11] = "X"
+    NewGame.setup_joueur1("Sous_marin", Plateau_temp, 0)
 
-    Bateau1.change_position(Plateau_temp, 0)
-    Bateau1.place_bateau(zone_de_jeu)
-    zone_de_jeu.print_zone()
+    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
+    Plateau_temp[0][0] = "X"
+    NewGame.setup_joueur2("Bateau", Plateau_temp, 0)
+    NewGame.setup_joueur2("Bateau", Plateau_temp, 2)
+
+
+
+
+    while(1):
+        print(f"Au tour de {NewGame.get_pseudo_joueur1()}")
+        if NewGame.tir_joueur1(int(input()), int(input())) == True:
+            break
+        print(f"Au tour de {NewGame.get_pseudo_joueur2()}")
+        if NewGame.tir_joueur2(int(input()), int(input())) == True:
+            break
+
+
+    #zone_de_jeu.print_zone()
 
 
 if __name__ == ('__main__'):
