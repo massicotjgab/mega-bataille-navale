@@ -1,6 +1,7 @@
 from GameEngine.GameEngine import Plateau
 from GameEngine.GameEngine import Joueur
 from GameEngine.GameEngine import Bateau
+from GameEngine.GameEngine import Partie
 
 
 def test():
@@ -96,3 +97,27 @@ def test_bateau_class_2():
     Bateau1.change_position(Plateau_temp, 2)
     Bateau1.place_bateau(zone_de_jeu)
     assert zone_de_jeu.get_xyz(11, 3, 2) == "Porte_container"
+
+################################################# Test Partie
+
+def test_pseudo_1():
+    jeu = Partie("toto", "titi", 15, 15, 3)
+    assert jeu.get_pseudo_joueur1() == "toto"
+
+def test_pseudo_2():
+    jeu = Partie("toto", "titi", 15, 15, 3)
+    assert jeu.get_pseudo_joueur2() == "titi"
+
+def test_setup():
+    jeu = Partie("toto", "titi", 15, 15, 3)
+    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
+    Plateau_temp[3][7] = "X"
+    jeu.setup_joueur1("Sous_marin", Plateau_temp, 2)
+    assert jeu.tir_joueur2(7, 3) == True
+
+def test_setup_vide():
+    jeu = Partie("toto", "titi", 15, 15, 3)
+    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
+    Plateau_temp[3][7] = "X"
+    jeu.setup_joueur1("Sous_marin", Plateau_temp, 2)
+    assert jeu.tir_joueur2(0, 0) == False
