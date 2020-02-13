@@ -1,75 +1,74 @@
 from GameEngine.GameEngine import Plateau
 from GameEngine.GameEngine import Joueur
 from GameEngine.GameEngine import Bateau
-from GameEngine.GameEngine import Partie
+from pprint import pprint
 
 
 def test():
     assert 2 > 1
 
-########################################### Test Zone de jeu
+########################################### Plateau
+def test_tire_vide_plateau():
+    plateau = Plateau(15, 15, 3)
+    assert plateau.tirer(15, 15) == [3, 0, 0]
 
-def test_tire_bateau():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    assert test.tirer(10, 2) == (1, 'porte_container')
+def test_tire_plateau():
+    plateau = Plateau(15, 15, 3)
+    plateau.set_xyz(2, 2, 2, "sous_marin")
+    assert plateau.tirer(2, 2) == [3, 2, 1]
 
-def test_double_tire_bateau():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    test.tirer(10, 2)
-    assert test.tirer(10, 2) == (4, 'X')
+def test_place_bateau():
+    plateau = Plateau(15, 15, 3)
+    plateau.place_bateau("sous_marin", 2, 2, 2, 2, 1)
+    assert plateau.get_xyz(2, 2, 1) == "sous_marin"
 
-def test_triple_tire_bateau_unique():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    test.tirer(10, 2)
-    test.tirer(10, 2)
-    assert test.tirer(10, 2) == (4, 'XX')
-
-def test_tire_eau():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    assert test.tirer(0, 0) == (4, 'X')
-
-def test_double_tire_eau():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    test.tirer(0, 0)
-    assert test.tirer(0, 0) == (4, 'XX')
+def test_place_bateau_2():
+    plateau = Plateau(15, 15, 3)
+    plateau.place_bateau("sous_marin", 2, 2, 2, 2, 1)
+    assert plateau.get_xyz(3, 3, 1) == "sous_marin"
 
 def test_vide():
-    test = Plateau(15, 15, 3)
-    assert test.check_vide() == True
+    plateau = Plateau(15, 15, 3)
+    assert plateau.check_vide() == True
 
-def test_non_vide():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    assert test.check_vide() == False
+def test__non_vide():
+    plateau = Plateau(15, 15, 3)
+    plateau.set_xyz(2, 2, 2, "sous_marin")
+    assert plateau.check_vide() == False
 
+def test_coule():
+    plateau = Plateau(15, 15, 3)
+    assert plateau.check_coule("sous_marin") == 1
 
-######################################### Test Joueur
+def test_non_coule():
+    plateau = Plateau(15, 15, 3)
+    plateau.set_xyz(2, 2, 2, "sous_marin")
+    assert plateau.check_coule("sous_marin") == 0
 
+########################################### Joueur
 def test_get_pseudo():
-    joueur1 = Joueur("toto")
-    assert joueur1.get_pseudo() == "toto"
+    player = Joueur("toto")
+    assert player.get_pseudo() == "toto"
 
 def test_change_pseudo():
-    joueur1 = Joueur("toto")
-    joueur1.change_pseudo("titi")
-    assert joueur1.get_pseudo() == "titi"
+    player = Joueur("toto")
+    player.change_pseudo("titi")
+    assert player.get_pseudo() == "titi"
 
-####################################### Test Bateau
+def test_format_pseudo():
+    player = Joueur("toto")
+    assert player.format_pseudo() == [1, 4, "t", "o", "t", "o"]
 
-def test_bateau_existe():
-    test = Plateau(15, 15, 3)
-    test.place_bateau("porte_container", 3, 2, 10, 2, 1)
-    assert test.check_any_exist("porte_container") == True
+def test_tire_joueur():
+    player = Joueur("toto")
+    assert player.tirer(1, 2) == [2, 1, 2]
 
-def test_bateau_disparu():
-    test = Plateau(15, 15, 3)
-    assert test.check_any_exist("porte_container") == False
+def test_answer_tire():
+    player = Joueur("toto")
+    player.place_bateau_test()
+    player.answer_tire(0, 1) == [3, 2, 0]
 
+########################################### Bateau
 def test_bateau_class_1():
     zone_de_jeu = Plateau(15, 15, 3)
     Bateau1 = Bateau("Porte_container", 15, 15)
@@ -97,27 +96,3 @@ def test_bateau_class_2():
     Bateau1.change_position(Plateau_temp, 2)
     Bateau1.place_bateau(zone_de_jeu)
     assert zone_de_jeu.get_xyz(11, 3, 2) == "Porte_container"
-
-################################################# Test Partie
-
-def test_pseudo_1():
-    jeu = Partie("toto", "titi", 15, 15, 3)
-    assert jeu.get_pseudo_joueur1() == "toto"
-
-def test_pseudo_2():
-    jeu = Partie("toto", "titi", 15, 15, 3)
-    assert jeu.get_pseudo_joueur2() == "titi"
-
-def test_setup():
-    jeu = Partie("toto", "titi", 15, 15, 3)
-    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
-    Plateau_temp[3][7] = "X"
-    jeu.setup_joueur1("Sous_marin", Plateau_temp, 2)
-    assert jeu.tir_joueur2(7, 3) == True
-
-def test_setup_vide():
-    jeu = Partie("toto", "titi", 15, 15, 3)
-    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
-    Plateau_temp[3][7] = "X"
-    jeu.setup_joueur1("Sous_marin", Plateau_temp, 2)
-    assert jeu.tir_joueur2(0, 0) == False

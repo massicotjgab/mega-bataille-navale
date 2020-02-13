@@ -1,5 +1,6 @@
 from pprint import pprint
 
+
 class Plateau:
 
     def __init__(self, x, y, z):
@@ -9,7 +10,8 @@ class Plateau:
         self.cube = [[[0 for k in range(x)] for j in range(y)] for i in range(z)]
 
     def tirer(self, x, y):
-
+        x = x - 1
+        y = y - 1
         state_0 = 0
         state_X = 0
         nom_bateau = ""
@@ -20,17 +22,24 @@ class Plateau:
                 self.cube[z][y][x] = "X"
             elif self.cube[z][y][x] == "X":
                 state_X = state_X + 1
-            else :
+            else:
                 nom_bateau = self.cube[z][y][x]
                 self.cube[z][y][x] = "X"
-                return z, nom_bateau
+                resultat = state_X + state_0 + 1
+                coule = self.check_coule(nom_bateau)
+                break
 
-        if state_X >= 3:
-            return 4, "XX"
-        else :
-            return 4, "X"
+        if nom_bateau == "":
+            resultat = 0
+            coule = 0
+
+        tram_answer = [3, resultat, coule]
+        return tram_answer
 
     def place_bateau(self, type, taille_x, taille_y, x, y, z):
+        x = x - 1
+        y = y - 1
+        z = z - 1
         for y_temp in range(taille_y):
             for x_temp in range(taille_x):
                 self.cube[z][y_temp+y][x_temp+x] = type
@@ -39,38 +48,68 @@ class Plateau:
         for x in range(self.x):
             for y in range(self.y):
                 for z in range(self.z):
-                    if self.cube[z][y][x] != 0 and self.cube[z][y][x] != "X" :
+                    if self.cube[z][y][x] != 0 and self.cube[z][y][x] != "X":
                         return False
         return True
 
-    def check_any_exist(self, type):
+    def check_coule(self, type):
         for x in range(self.x):
             for y in range(self.y):
                 for z in range(self.z):
-                    if self.cube[z][y][x] == type :
-                        return True
-        return False
+                    if self.cube[z][y][x] == type:
+                        return 0
+        return 1
 
     def get_xyz(self, x, y, z):
+        x = x - 1
+        y = y - 1
+        z = z - 1
         return self.cube[z][y][x]
 
     def set_xyz(self, x, y, z, value):
+        x = x - 1
+        y = y - 1
+        z = z - 1
         self.cube[z][y][x] = value
 
     def print_zone(self):
         pprint(self.cube)
 
 
-
 class Joueur:
     def __init__(self, nom):
         self.pseudo = nom
+        self.attaque = Plateau(15, 15, 3)
+        self.defense = Plateau(15, 15, 3)
+        self.tram_pseudo = [1, len(self.pseudo)]
+        self.tram_pseudo = self.tram_pseudo + list(self.pseudo)
 
     def get_pseudo(self):
         return self.pseudo
 
     def change_pseudo(self, nom):
         self.pseudo = nom
+        self.tram_pseudo = [1, len(self.pseudo)]
+        self.tram_pseudo = self.tram_pseudo + list(self.pseudo)
+
+    def format_pseudo(self):
+        return self.tram_pseudo
+
+    def tirer(self, x, y):
+        self.x = x
+        self.y = y
+        self.tram_tire = [2, x, y]
+        return self.tram_tire
+
+    def answer_tire(self, x, y):
+        return self.defense.tirer(x, y)
+
+    def place_bateau_test(self):
+        self.defense.set_xyz(0, 0, 2, "Sous_marin")
+        self.defense.set_xyz(1, 0, 2, "Sous_marin")
+        self.defense.set_xyz(0, 1, 2, "Sous_marin")
+        self.defense.set_xyz(1, 1, 2, "Sous_marin")
+
 
 class Bateau:
     def __init__(self, nom, x, y):
@@ -80,7 +119,6 @@ class Bateau:
         self.niveau = 0
         self.name = nom
 
-
     def change_position(self, Plateau, niveau):
         self.emplacement = Plateau
         self.niveau = niveau
@@ -89,108 +127,22 @@ class Bateau:
                 if self.emplacement[y_temp][x_temp] != 0:
                     self.emplacement[y_temp][x_temp] = self.name
 
-
     def place_bateau(self, zone_de_jeu):
         for x_temp in range(self.x):
             for y_temp in range(self.y):
                 if self.emplacement[y_temp][x_temp] != 0:
                     zone_de_jeu.set_xyz(x_temp, y_temp, self.niveau, self.name)
 
-class Partie:
-    def __init__(self, joueur1, joueur2, x, y, z):
-        self.joueur1 = Joueur(joueur1)
-        self.joueur2 = Joueur(joueur2)
-        self.plateau_joueur1 = Plateau(x, y, z)
-        self.plateau_joueur2 = Plateau(x, y, z)
-
-    def get_pseudo_joueur1(self):
-        return self.joueur1.get_pseudo()
-
-    def get_pseudo_joueur2(self):
-        return self.joueur2.get_pseudo()
-
-    def setup_joueur1(self, nom, plateau, niveau):
-        placement = Bateau(nom, 15, 15)
-        placement.change_position(plateau, niveau)
-        placement.place_bateau(self.plateau_joueur1)
-        print(f"{nom} placé par {self.joueur1.get_pseudo()}")
-
-    def setup_joueur2(self, nom, plateau, niveau):
-        placement = Bateau(nom, 15, 15)
-        placement.change_position(plateau, niveau)
-        placement.place_bateau(self.plateau_joueur2)
-        print(f"{nom} placé par {self.joueur2.get_pseudo()}")
-
-    def tir_joueur1(self, x, y):
-        (niveau, state) = self.plateau_joueur2.tirer(x, y)
-        if niveau == 4:
-            if state == 'X':
-                print("Coup dans l'eau !")
-            elif state == 'XX':
-                print("Tu as déjà tiré ici !")
-        else:
-            if self.plateau_joueur2.check_any_exist(state) == False:
-                print(f"Tu as coulé un {state} au niveau {niveau} !")
-            else :
-                print(f"Tu as touché un {state} au niveau {niveau} !")
-
-        if self.plateau_joueur2.check_vide() == True:
-            print("Plus aucun bateau adverse !")
-            return True
-        else :
-            return False
-
-    def tir_joueur2(self, x, y):
-        (niveau, state) = self.plateau_joueur1.tirer(x, y)
-        if niveau == 4:
-            if state == 'X':
-                print("Coup dans l'eau !")
-            elif state == 'XX':
-                print("Tu as déjà tiré ici !")
-        else:
-            if self.plateau_joueur1.check_any_exist(state) == False:
-                print(f"Tu as coulé un {state} au niveau {niveau} !")
-            else :
-                print(f"Tu as touché un {state} au niveau {niveau} !")
-
-        if self.plateau_joueur1.check_vide() == True:
-            print("Plus aucun bateau adverse !")
-            return True
-        else :
-            return False
-
-
-
-
 
 def main():
-    NewGame = Partie("Cocasticox", "Lacoutt", 15, 15, 3)
+    Joueur1 = Joueur("Cocasticox")
+    Joueur2 = Joueur("Lacoutt")
 
-    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
-    Plateau_temp[3][7] = "X"
-    #Plateau_temp[3][10] = "X"
-    #Plateau_temp[2][11] = "X"
-    #Plateau_temp[3][11] = "X"
-    NewGame.setup_joueur1("Sous_marin", Plateau_temp, 0)
+    Joueur1.place_bateau_test()
 
-    Plateau_temp = [[0 for k in range(15)] for j in range(15)]
-    Plateau_temp[0][0] = "X"
-    NewGame.setup_joueur2("Bateau", Plateau_temp, 0)
-    NewGame.setup_joueur2("Bateau", Plateau_temp, 2)
+    pprint(Joueur1.tirer(1, 1))
 
-
-
-
-    while(1):
-        print(f"Au tour de {NewGame.get_pseudo_joueur1()}")
-        if NewGame.tir_joueur1(int(input()), int(input())) == True:
-            break
-        print(f"Au tour de {NewGame.get_pseudo_joueur2()}")
-        if NewGame.tir_joueur2(int(input()), int(input())) == True:
-            break
-
-
-    #zone_de_jeu.print_zone()
+    pprint(Joueur1.answer_tire(1, 1))
 
 
 if __name__ == ('__main__'):
