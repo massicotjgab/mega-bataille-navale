@@ -6,6 +6,8 @@ import QtQuick.Controls 2.14
 //PLATEAU DE CASES
 ColumnLayout{
     id:defenseColumn
+    Layout.fillWidth: true
+    Layout.margins: 25
     Text{
         text: "DEFENSE"
         font.pointSize: 18
@@ -20,21 +22,40 @@ ColumnLayout{
         }
     }
     TabBar{
-        Layout.fillWidth: true
+        id: defBar
+        Layout.preferredWidth: defenseStack.width
         TabButton{
             text: "Surface"
             font.pointSize: 18
-            onClicked: defenseStack.currentIndex = 0
+            onClicked: defenseStack.currentIndex = defBar.currentIndex
+            background: Rectangle{
+                radius: 5
+                color: defBar.currentIndex == 0 ? "lightgrey":"black"
+                border.color: defBar.currentIndex == 0 ? "black":"white"
+                border.width: 3
+            }
         }
         TabButton{
             text: "Millieu"
             font.pointSize: 18
-            onClicked: defenseStack.currentIndex = 1
+            onClicked: defenseStack.currentIndex = defBar.currentIndex
+            background: Rectangle{
+                radius: 5
+                color: defBar.currentIndex == 1 ? "lightgrey":"black"
+                border.color: defBar.currentIndex == 1 ? "black":"white"
+                border.width: 3
+            }
         }
         TabButton{
             text: "Profondeur"
             font.pointSize: 18
-            onClicked: defenseStack.currentIndex = 2
+            onClicked: defenseStack.currentIndex = defBar.currentIndex
+            background: Rectangle{
+                radius: 5
+                color: defBar.currentIndex == 2 ? "lightgrey":"black"
+                border.color: defBar.currentIndex == 2 ? "black":"white"
+                border.width: 3
+            }
         }
     }
 }
