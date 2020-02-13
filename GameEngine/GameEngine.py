@@ -79,6 +79,7 @@ class Plateau:
 class Joueur:
     def __init__(self, nom):
         self.pseudo = nom
+        self.pseudo_adversaire = ""
         self.attaque = Plateau(15, 15, 3)
         self.defense = Plateau(15, 15, 3)
         self.tram_pseudo = [1, len(self.pseudo)]
@@ -104,11 +105,36 @@ class Joueur:
     def answer_tire(self, x, y):
         return self.defense.tirer(x, y)
 
+    def decrypt_tram(self, tram):
+        if tram[0] == 1:    # Name
+            self.pseudo_adversaire = ''.join(tram[2:])
+        elif tram[0] == 2:  # Tire
+            return self.answer_tire(tram[1], tram[2])
+        elif tram[0] == 3:  # Answer
+            if tram[1] == 0:
+                for z in range(1, 4):
+                    self.attaque.set_xyz(self.x, self.y, z, "X")
+            else:
+                for z in range(1, tram[1]+1):
+                    self.attaque.set_xyz(self.x, self.y, z, "X")
+                if tram[2] == 1:
+                    return True
+        return False
+
+    def get_pseudo_adversaire(self):
+        return self.pseudo_adversaire
+
+    def print_defense(self):
+        self.defense.print_zone()
+
+    def print_attaque(self):
+        self.attaque.print_zone()
+
     def place_bateau_test(self):
-        self.defense.set_xyz(0, 0, 2, "Sous_marin")
-        self.defense.set_xyz(1, 0, 2, "Sous_marin")
-        self.defense.set_xyz(0, 1, 2, "Sous_marin")
         self.defense.set_xyz(1, 1, 2, "Sous_marin")
+        self.defense.set_xyz(1, 2, 2, "Sous_marin")
+        self.defense.set_xyz(2, 1, 2, "Sous_marin")
+        self.defense.set_xyz(2, 2, 2, "Sous_marin")
 
 
 class Bateau:
@@ -139,10 +165,15 @@ def main():
     Joueur2 = Joueur("Lacoutt")
 
     Joueur1.place_bateau_test()
+    Joueur2.place_bateau_test()
 
-    pprint(Joueur1.tirer(1, 1))
+    tram = Joueur1.tirer(1, 1)
+    tram = Joueur2.decrypt_tram(tram)
+    Joueur1.decrypt_tram(tram)
 
-    pprint(Joueur1.answer_tire(1, 1))
+    Joueur2.print_defense()
+    print("##################################################################")
+    Joueur1.print_attaque()
 
 
 if __name__ == ('__main__'):
