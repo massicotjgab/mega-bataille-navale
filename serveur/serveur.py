@@ -36,9 +36,10 @@ def shutdown_server():
     sock.close()
 
 
-start_server("localhost", 9999)
-print(f"Sent:   {message}")
-send_to_client(message)
-print(f"Recieve: {recieve_from_client()}")
-# time.sleep(2)
-shutdown_server()
+if __name__ == "__main__":
+    start_server("localhost", 9999)
+    print(f"Sent:   {message}")
+    send_to_client(message)
+    print(f"Recieve: {recieve_from_client()}")
+    # time.sleep(2)
+    shutdown_server()
