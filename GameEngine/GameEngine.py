@@ -115,8 +115,9 @@ class Joueur:
                 for z in range(1, 4):
                     self.attaque.set_xyz(self.x, self.y, z, "X")
             else:
-                for z in range(1, tram[1]+1):
+                for z in range(1, tram[1]):
                     self.attaque.set_xyz(self.x, self.y, z, "X")
+                self.attaque.set_xyz(self.x, self.y, tram[1], "T")
                 if tram[2] == 1:
                     return True
         return False
@@ -129,6 +130,12 @@ class Joueur:
 
     def print_attaque(self):
         self.attaque.print_zone()
+
+    def get_xyz_defense(self, x, y, z):
+        return self.defense.get_xyz(x, y, z)
+
+    def get_xyz_attaque(self, x, y, z):
+        return self.attaque.get_xyz(x, y, z)
 
     def place_bateau_test(self):
         self.defense.set_xyz(1, 1, 2, "Sous_marin")
@@ -163,18 +170,18 @@ class Bateau:
 # def main():
 #     Joueur1 = Joueur("Cocasticox")
 #     Joueur2 = Joueur("Lacoutt")
-
+#
 #     Joueur1.place_bateau_test()
 #     Joueur2.place_bateau_test()
-
+#
 #     tram = Joueur1.tirer(1, 1)
 #     tram = Joueur2.decrypt_tram(tram)
 #     Joueur1.decrypt_tram(tram)
-
+#
 #     Joueur2.print_defense()
 #     print("##################################################################")
 #     Joueur1.print_attaque()
-
-
+#
+#
 # if __name__ == ('__main__'):
 #     main()
