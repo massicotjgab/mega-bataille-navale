@@ -160,21 +160,21 @@ class Bateau:
                     zone_de_jeu.set_xyz(x_temp, y_temp, self.niveau, self.name)
 
 
-def main():
-    Joueur1 = Joueur("Cocasticox")
-    Joueur2 = Joueur("Lacoutt")
+# def main():
+#     Joueur1 = Joueur("Cocasticox")
+#     Joueur2 = Joueur("Lacoutt")
 
-    Joueur1.place_bateau_test()
-    Joueur2.place_bateau_test()
+#     Joueur1.place_bateau_test()
+#     Joueur2.place_bateau_test()
 
-    tram = Joueur1.tirer(1, 1)
-    tram = Joueur2.decrypt_tram(tram)
-    Joueur1.decrypt_tram(tram)
+#     tram = Joueur1.tirer(1, 1)
+#     tram = Joueur2.decrypt_tram(tram)
+#     Joueur1.decrypt_tram(tram)
 
-    Joueur2.print_defense()
-    print("##################################################################")
-    Joueur1.print_attaque()
+#     Joueur2.print_defense()
+#     print("##################################################################")
+#     Joueur1.print_attaque()
 
 
-if __name__ == ('__main__'):
-    main()
+# if __name__ == ('__main__'):
+#     main()
