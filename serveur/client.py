@@ -27,9 +27,10 @@ def send_to_serveur(message):
     sock.sendall(message)
 
 
-start_client("localhost", 9999)
-print("Sent:     {}".format(message))
-# time.sleep(3)
-send_to_serveur(message)
-print(f"Recieve  {recieve_from_serveur()}")
-shutdown_client()
+if __name__ == "__main__":
+    start_client("localhost", 9999)
+    print("Sent:     {}".format(message))
+    # time.sleep(3)
+    send_to_serveur(message)
+    print(f"Recieve  {recieve_from_serveur()}")
+    shutdown_client()
