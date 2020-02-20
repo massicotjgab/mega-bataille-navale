@@ -2,10 +2,10 @@ import socket
 # import time
 
 sock = None
-message = bytearray(3)
-message[0] = 2
-message[1] = 8
-message[2] = 7
+send_tabl_to_serveur = bytearray(3)
+send_tabl_to_serveur[0] = 2
+send_tabl_to_serveur[1] = 8
+send_tabl_to_serveur[2] = 7
 
 
 def start_client(host, port):
@@ -23,14 +23,14 @@ def recieve_from_serveur():
     return sock.recv(1024)
 
 
-def send_to_serveur(message):
-    sock.sendall(message)
+def send_to_serveur(send_tabl_to_serveur):
+    sock.sendall(send_tabl_to_serveur)
 
 
 if __name__ == "__main__":
     start_client("localhost", 9999)
-    print("Sent:     {}".format(message))
+    print("Sent:     {}".format(send_tabl_to_serveur))
     # time.sleep(3)
-    send_to_serveur(message)
+    send_to_serveur(send_tabl_to_serveur)
     print(f"Recieve  {recieve_from_serveur()}")
     shutdown_client()
