@@ -80,6 +80,27 @@ def test_decrypt_tram_tire_bateau_coule():
     Joueur1.decrypt_tram([2, 2, 1])
     assert Joueur1.decrypt_tram([2, 2, 2]) == [3, 2, 1]
 
+
+def test_differentiation_non_touche():
+    Joueur1 = Joueur("toto")
+    Joueur2 = Joueur("titi")
+    Joueur2.place_bateau_test()
+    tram = Joueur1.tirer(4, 5)
+    tram = Joueur2.decrypt_tram(tram)
+    Joueur1.decrypt_tram(tram)
+    assert Joueur1.get_xyz_attaque(4, 5, 3) == "X"
+
+
+def test_differentiation_touche():
+    Joueur1 = Joueur("toto")
+    Joueur2 = Joueur("titi")
+    Joueur2.place_bateau_test()
+    tram = Joueur1.tirer(1, 2)
+    tram = Joueur2.decrypt_tram(tram)
+    Joueur1.decrypt_tram(tram)
+    assert Joueur1.get_xyz_attaque(1, 2, 2) == "T"
+
+
 # -------------------------- Joueur ---------------------------
 
 
