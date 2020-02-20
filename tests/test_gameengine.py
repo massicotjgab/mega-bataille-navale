@@ -139,7 +139,7 @@ def test_explosion_nucleraire():
         tram = Joueur1.tirer(x, 4)
         tram = Joueur2.decrypt_tram(tram)
         Joueur1.decrypt_tram(tram)
-    result = [Joueur2.get_defense_xyz(3, 1, 2), Joueur2.get_defense_xyz(14,
+    result = [Joueur2.get_xyz_defense(3, 1, 2), Joueur2.get_xyz_defense(14,
                                                                         7, 2)]
     assert result == ["X", "X"]
 
@@ -152,7 +152,7 @@ def test_explosion_nucleaire_coin():
         tram = Joueur1.tirer(x, 1)
         tram = Joueur2.decrypt_tram(tram)
         Joueur1.decrypt_tram(tram)
-    result = [Joueur2.get_defense_xyz(1, 1, 2), Joueur2.get_defense_xyz(9,
+    result = [Joueur2.get_xyz_defense(1, 1, 2), Joueur2.get_xyz_defense(9,
                                                                         4, 2)]
     assert result == ["X_Sous_marin_nucleaire_1", "X"]
 
