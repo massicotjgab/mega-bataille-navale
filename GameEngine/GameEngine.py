@@ -14,27 +14,44 @@ class Plateau:
         y = y - 1
         state_0 = 0
         state_X = 0
+        resultat = 0
+        coule = 0
         nom_bateau = ""
 
         for z in range(3):
             if self.cube[z][y][x] == 0:
                 state_0 = state_0 + 1
                 self.cube[z][y][x] = "X"
-            elif self.cube[z][y][x] == "X":
+            elif self.cube[z][y][x][0] == "X":
                 state_X = state_X + 1
             else:
                 nom_bateau = self.cube[z][y][x]
-                self.cube[z][y][x] = "X"
+                self.cube[z][y][x] = "X_" + nom_bateau
                 resultat = state_X + state_0 + 1
                 coule = self.check_coule(nom_bateau)
                 break
 
-        if nom_bateau == "":
-            resultat = 0
-            coule = 0
+        if nom_bateau.find("ucl") >= 0 and coule == 1:
+            self.explose_nucleaire(nom_bateau)
 
         tram_answer = [3, resultat, coule]
         return tram_answer
+
+    def explose_nucleaire(self, nom_bateau):
+        for x in range(15):
+            for y in range(15):
+                for z in range(3):
+                    if self.cube[z][y][x] == 0:
+                        pass
+                    elif self.cube[z][y][x].find(nom_bateau) >= 0:
+                        for x_exp in range(-3, 4):
+                            for y_exp in range(-3, 4):
+                                nom_case = self.cube[z][y+y_exp][x+x_exp]
+                                if (0 <= (x+x_exp) <= 14) and (0 <= (y+y_exp) <= 14):
+                                    if nom_case == 0:
+                                        self.cube[z][y+y_exp][x+x_exp] = "X"
+                                    elif nom_case[0] != "X":
+                                        self.cube[z][y+y_exp][x+x_exp] = "X_" + nom_case
 
     def place_bateau(self, type, taille_x, taille_y, x, y, z):
         x = x - 1
@@ -48,7 +65,7 @@ class Plateau:
         for x in range(self.x):
             for y in range(self.y):
                 for z in range(self.z):
-                    if self.cube[z][y][x] != 0 and self.cube[z][y][x] != "X":
+                    if self.cube[z][y][x] != 0 and self.cube[z][y][x][0] != "X":
                         return False
         return True
 
@@ -142,6 +159,22 @@ class Joueur:
         self.defense.set_xyz(1, 2, 2, "Sous_marin")
         self.defense.set_xyz(2, 1, 2, "Sous_marin")
         self.defense.set_xyz(2, 2, 2, "Sous_marin")
+
+    def place_nucleaire_test(self):
+        self.defense.set_xyz(6, 4, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(7, 4, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(8, 4, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(9, 4, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(10, 4, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(11, 4, 2, "Sous_marin_nucleaire_1")
+
+    def place_nucleaire_test_coin(self):
+        self.defense.set_xyz(1, 1, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(2, 1, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(3, 1, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(4, 1, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(5, 1, 2, "Sous_marin_nucleaire_1")
+        self.defense.set_xyz(6, 1, 2, "Sous_marin_nucleaire_1")
 
 
 class Bateau:

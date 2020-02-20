@@ -131,6 +131,32 @@ def test_answer_tire():
     player.answer_tire(0, 1) == [3, 2, 0]
 
 
+def test_explosion_nucleraire():
+    Joueur1 = Joueur("Cocasticox")
+    Joueur2 = Joueur("Lacoutt")
+    Joueur2.place_nucleaire_test()
+    for x in range(6, 12):
+        tram = Joueur1.tirer(x, 4)
+        tram = Joueur2.decrypt_tram(tram)
+        Joueur1.decrypt_tram(tram)
+    result = [Joueur2.get_xyz_defense(3, 1, 2), Joueur2.get_xyz_defense(14,
+                                                                        7, 2)]
+    assert result == ["X", "X"]
+
+
+def test_explosion_nucleaire_coin():
+    Joueur1 = Joueur("Cocasticox")
+    Joueur2 = Joueur("Lacoutt")
+    Joueur2.place_nucleaire_test_coin()
+    for x in range(1, 7):
+        tram = Joueur1.tirer(x, 1)
+        tram = Joueur2.decrypt_tram(tram)
+        Joueur1.decrypt_tram(tram)
+    result = [Joueur2.get_xyz_defense(1, 1, 2), Joueur2.get_xyz_defense(9,
+                                                                        4, 2)]
+    assert result == ["X_Sous_marin_nucleaire_1", "X"]
+
+
 # --------------------------- Bateau --------------------------
 
 
