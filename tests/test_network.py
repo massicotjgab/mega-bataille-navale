@@ -4,8 +4,8 @@
 # from serveur.serveur import shutdown_servers, start_server
 from unittest.mock import Mock
 
-import serveur.client as client
-import serveur.serveur as serveur
+import Src.Network.client as client
+import Src.Network.serveur as serveur
 
 # -------------------------- Client ---------------------------
 send_tabl_to_serveur = bytearray(3)

@@ -16,4 +16,4 @@ jobs:
       run: |
         sudo pip3 install -r requirements.txt
     - name: Run tests on ${{ matrix.python-version }}
-      run: pytest -v --cov=.
+      run: pytest -v --cov=Src/*

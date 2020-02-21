@@ -1,4 +1,4 @@
-from GameEngine.GameEngine import Plateau, Joueur, Bateau
+from Src.GameEngine.GameEngine import Plateau, Joueur, Bateau
 
 
 # -------------------------- Test ---------------------------
