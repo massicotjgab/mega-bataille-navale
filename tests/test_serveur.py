@@ -24,6 +24,9 @@ def test_send_to_serveur():
     pouet = object()
     client.send_to_serveur(pouet)
     args = client.sock.sendall.call_args.args
+    print(type(client.sock))
+    print(type(client.sock.sendall))
+    print(client.sock.sendall.call_args)
     print(args)
     assert len(args) == 1
     assert args[0] is pouet
