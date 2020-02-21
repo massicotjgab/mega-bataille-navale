@@ -23,9 +23,7 @@ def test_send_to_serveur():
     client.sock = Mock()
     pouet = object()
     client.send_to_serveur(pouet)
-    args = client.sock.sendall.call_args.args
-    assert len(args) == 1
-    assert args[0] is pouet
+    client.sock.sendall.assert_called_with(pouet)
 
 
 def test_start_client():
