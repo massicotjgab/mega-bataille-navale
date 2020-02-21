@@ -53,6 +53,14 @@ class Plateau:
                                     elif nom_case[0] != "X":
                                         self.cube[z][y+y_exp][x+x_exp] = "X_" + nom_case
 
+    def get_plateau_gui(self):
+        tab = []
+        for z in range(1, 4):
+            for y in range(1, 16):
+                for x in range(1, 16):
+                    tab.append(self.get_xyz(x, y, z))
+        return tab
+
     def place_bateau(self, type, taille_x, taille_y, x, y, z):
         x = x - 1
         y = y - 1
@@ -153,6 +161,12 @@ class Joueur:
 
     def get_xyz_attaque(self, x, y, z):
         return self.attaque.get_xyz(x, y, z)
+
+    def formate_attaque_gui(self):
+        return self.attaque.get_plateau_gui()
+
+    def formate_defense_gui(self):
+        return self.defense.get_plateau_gui()
 
     def place_bateau_test(self):
         self.defense.set_xyz(1, 1, 2, "Sous_marin")
