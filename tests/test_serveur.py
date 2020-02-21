@@ -70,3 +70,17 @@ def test_start_serveur():
     serveur.sock.bind.assert_called_with((host, port))
     serveur.sock.listen.assert_called_with(1)
     assert serveur.addr_client == val1
+
+
+def test_recieve_from_client():
+    serveur.addr_client = Mock()
+    serveur.recieve_from_client()
+    serveur.addr_client.recv.assert_called_with(1024)
+
+
+# def test_send_to_client_addr_none(capsys):
+#     serveur.addr_client = None
+#     out, err = capsys.readouterr()
+#     assert out == "Pas d'adresse client\n"
+#     assert err == "Pas d'adresse client\n"
+    
