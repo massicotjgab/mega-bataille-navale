@@ -30,8 +30,7 @@ def test_send_to_serveur():
     print(client.sock.sendall.call_args.args)
     print(repr(client.sock.sendall.call_args))
     print(repr(client.sock.sendall.call_args.args))
-    assert len(client.sock.sendall.call_args.args) == 1
-    assert client.sock.sendall.call_args.args[0] is pouet
+    client.sock.sendall.assert_called_with(pouet)
 
 
 def test_start_client():
