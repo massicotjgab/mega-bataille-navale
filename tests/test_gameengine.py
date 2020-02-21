@@ -100,7 +100,6 @@ def test_differentiation_touche():
     Joueur1.decrypt_tram(tram)
     assert Joueur1.get_xyz_attaque(1, 2, 2) == "T"
 
-
 # -------------------------- Joueur ---------------------------
 
 
@@ -128,7 +127,7 @@ def test_tire_joueur():
 def test_answer_tire():
     player = Joueur("toto")
     player.place_bateau_test()
-    player.answer_tire(0, 1) == [3, 2, 0]
+    assert player.answer_tire(1, 1) == [3, 2, 0]
 
 
 def test_explosion_nucleraire():
@@ -155,6 +154,17 @@ def test_explosion_nucleaire_coin():
     result = [Joueur2.get_xyz_defense(1, 1, 2), Joueur2.get_xyz_defense(9,
                                                                         4, 2)]
     assert result == ["X_Sous_marin_nucleaire_1", "X"]
+
+
+def test_format_grille_gui():
+    Joueur1 = Joueur("Cocasticox")
+    Joueur1.place_nucleaire_test()
+    tab = Joueur1.formate_defense_gui()
+    print(len(tab))
+    tab_t = [0, 0]
+    tab_t[0] = tab[275]
+    tab_t[1] = tab[274]
+    assert ["Sous_marin_nucleaire_1", 0] == tab_t
 
 
 # --------------------------- Bateau --------------------------
