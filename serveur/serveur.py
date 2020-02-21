@@ -12,13 +12,17 @@ sock = None
 # https://docs.python.org/3/library/queue.html#queue.Queue.join
 
 
+def _get_socket():
+    return socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+
 def start_server(host, port):
     global sock
     global addr_client
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = _get_socket()
     sock.bind((host, port))
     sock.listen(1)
-    addr_client, address = sock.accept()
+    addr_client, _ = sock.accept()
 
 
 def send_to_client(message):

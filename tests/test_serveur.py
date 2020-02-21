@@ -21,8 +21,11 @@ def test_recieve_from_serveur():
 
 def test_send_to_serveur():
     client.sock = Mock()
-    client.send_to_serveur(send_tabl_to_serveur)
-    client.sock.sendall.assert_called_with(send_tabl_to_serveur)
+    pouet = object()
+    client.send_to_serveur(pouet)
+    args = client.sock.sendall.call_args.args
+    assert len(args) == 1
+    assert args[0] is pouet
 
 
 def test_start_client():
@@ -34,17 +37,38 @@ def test_start_client():
     client.sock.connect((host, port))
 
 
-def test_shutdown_client():
+def test_shutdown_client_not_none():
     client.sock = Mock()
     client.shutdown_client()
-    if client.sock is True:
-        client.sock.close()
+    client.sock.close.assert_called_with()
+
+
+def test_shutdown_client_none():
+    client.sock = None
+    client.shutdown_client()
+    # no attribute error
 
 # -------------------------- Serveur ---------------------------
 
 
-def test_start_serveur():
+def test_get_socket():
     serveur.socket = Mock()
-    # serveur.start_server(host, port)
-    # serveur.socket.socket.assert_called_with(serveur.socket.AF_INET,
-    #                                         serveur.socket.SOCK_STREAM)
+
+    serveur._get_socket()
+
+    serveur.socket.socket.assert_called_with(serveur.socket.AF_INET,
+                                             serveur.socket.SOCK_STREAM)
+
+
+def test_start_serveur():
+    socket = Mock()
+    serveur._get_socket = Mock(return_value=socket)
+    val1 = object()
+    val2 = object()
+    socket.accept = Mock(return_value=(val1, val2)) 
+
+    serveur.start_server(host, port)
+
+    serveur.sock.bind.assert_called_with((host, port))
+    serveur.sock.listen.assert_called_with(1)
+    assert serveur.addr_client == val1
