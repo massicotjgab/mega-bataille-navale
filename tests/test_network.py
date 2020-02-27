@@ -1,7 +1,3 @@
-# from serveur.client import send_to_serveur, recieve_from_serveur
-# from serveur.client import shutdown_client, start_client
-# from serveur.serveur import send_to_client, recieve_from_client
-# from serveur.serveur import shutdown_servers, start_server
 from unittest.mock import Mock
 
 import Src.Network.client as client
