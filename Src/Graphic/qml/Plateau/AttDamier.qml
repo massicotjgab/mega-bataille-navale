@@ -6,7 +6,8 @@ import QtQuick.Controls 2.14
 //DAMIER
 GridLayout {
     property string couleur : tabColor[index]
-    id: damier
+    property var tabAtt: PlayerInfo.updateAtt()
+    id: attDamier
     Layout.fillWidth : true
     Layout.fillHeight : true
     columnSpacing : 0
@@ -14,7 +15,8 @@ GridLayout {
     columns: 15
 
     Repeater{
+        id: defRepCase
         model : 225
-        OneCase{}
+        AttOneCase{}
     }
 }

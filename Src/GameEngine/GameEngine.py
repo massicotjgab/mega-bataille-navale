@@ -102,8 +102,8 @@ class Plateau:
 
 
 class Joueur:
-    def __init__(self, nom):
-        self.pseudo = nom
+    def __init__(self):
+        self.pseudo = ""
         self.pseudo_adversaire = ""
         self.attaque = Plateau(15, 15, 3)
         self.defense = Plateau(15, 15, 3)

@@ -17,8 +17,8 @@ ColumnLayout{
         clip: true
         interactive : false
         Repeater{
-            model: 3
-            Damier{}
+            model: 3           
+            DefDamier{}
         }
     }
     TabBar{
@@ -30,8 +30,8 @@ ColumnLayout{
             onClicked: defenseStack.currentIndex = defBar.currentIndex
             background: Rectangle{
                 radius: 5
-                color: defBar.currentIndex == 0 ? "lightgrey":"black"
-                border.color: defBar.currentIndex == 0 ? "black":"white"
+                color: defBar.currentIndex === 0 ? "lightgrey":"black"
+                border.color: defBar.currentIndex === 0 ? "black":"white"
                 border.width: 3
             }
         }
@@ -41,8 +41,8 @@ ColumnLayout{
             onClicked: defenseStack.currentIndex = defBar.currentIndex
             background: Rectangle{
                 radius: 5
-                color: defBar.currentIndex == 1 ? "lightgrey":"black"
-                border.color: defBar.currentIndex == 1 ? "black":"white"
+                color: defBar.currentIndex === 1 ? "lightgrey":"black"
+                border.color: defBar.currentIndex === 1 ? "black":"white"
                 border.width: 3
             }
         }
@@ -52,8 +52,8 @@ ColumnLayout{
             onClicked: defenseStack.currentIndex = defBar.currentIndex
             background: Rectangle{
                 radius: 5
-                color: defBar.currentIndex == 2 ? "lightgrey":"black"
-                border.color: defBar.currentIndex == 2 ? "black":"white"
+                color: defBar.currentIndex === 2 ? "lightgrey":"black"
+                border.color: defBar.currentIndex === 2 ? "black":"white"
                 border.width: 3
             }
         }

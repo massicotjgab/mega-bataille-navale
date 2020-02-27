@@ -12,7 +12,6 @@ ColumnLayout{//CONNECTION
         Layout.alignment: Qt.AlignHCenter
         text: "CHOIX DU MODE DE CONNEXION"
         font.pointSize: 18
-        horizontalAlignment: horizontalCenter
     }
 
     TabBar{//CHOIX DU MODE DE CONNECTION
@@ -24,8 +23,8 @@ ColumnLayout{//CONNECTION
             font.pointSize: 18
             background: Rectangle{
                 radius: 5
-                color: modeConnectBar.currentIndex == 0 ? "lightgrey":"black"
-                border.color: modeConnectBar.currentIndex == 0 ? "black":"white"
+                color: modeConnectBar.currentIndex === 0 ? "lightgrey":"black"
+                border.color: modeConnectBar.currentIndex === 0 ? "black":"white"
                 border.width: 3
             }
             onClicked: modeConnectStack.currentIndex = modeConnectBar.currentIndex
@@ -35,8 +34,8 @@ ColumnLayout{//CONNECTION
             font.pointSize: 18
             background: Rectangle{
                 radius: 5
-                color: modeConnectBar.currentIndex == 1 ? "lightgrey":"black"
-                border.color: modeConnectBar.currentIndex == 1 ? "black":"white"
+                color: modeConnectBar.currentIndex === 1 ? "lightgrey":"black"
+                border.color: modeConnectBar.currentIndex === 1 ? "black":"white"
                 border.width: 3
             }
             onClicked: modeConnectStack.currentIndex = modeConnectBar.currentIndex
@@ -53,51 +52,57 @@ ColumnLayout{//CONNECTION
 
         ColumnLayout{//MODE HEBERGEUR
             Layout.fillWidth: true
+            id: hebergColumn
             TextField{
                 placeholderText: "Nom"
                 Layout.minimumWidth: 500
                 Layout.alignment: Qt.AlignHCenter
                 maximumLength : 15
                 font.pointSize: 18
+                onEditingFinished: {
+                    PlayerInfo.name(text)
+                }
             }
             TextField{
-                placeholderText: "Adresse ip"
+                placeholderText: "255.255.255.255"
                 Layout.minimumWidth: 500
                 Layout.alignment: Qt.AlignHCenter
                 maximumLength : 15
                 font.pointSize: 18
-            }
-            TextField{
-                placeholderText: "autre champ a definir"
-                Layout.minimumWidth: 500
-                Layout.alignment: Qt.AlignHCenter
-                maximumLength : 15
-                font.pointSize: 18
+                enabled: false
             }
         }
 
         ColumnLayout{//MODE HEBERGE
             Layout.fillWidth: true
             TextField{
+                id: nmChp
                 placeholderText: "Nom"
                 Layout.minimumWidth: 500
                 Layout.alignment: Qt.AlignHCenter
                 maximumLength : 15
                 font.pointSize: 18
+                focus: true
+                onEditingFinished: {
+                    PlayerInfo.name(text)
+                }
+                Keys.onReturnPressed: {
+                    ipChp.focus = true
+                }
             }
             TextField{
-                placeholderText: "autre champ a definir"
+                id: ipChp
+                placeholderText: "Adresse ip"
                 Layout.minimumWidth: 500
                 Layout.alignment: Qt.AlignHCenter
                 maximumLength : 15
                 font.pointSize: 18
-            }
-            TextField{
-                placeholderText: "autre champ a definir"
-                Layout.minimumWidth: 500
-                Layout.alignment: Qt.AlignHCenter
-                maximumLength : 15
-                font.pointSize: 18
+                onEditingFinished: {
+                    PlayerInfo.ipadd(text)
+                }
+                Keys.onReturnPressed: {
+                    okBtn.focus = true
+                }
             }
         }
     }
