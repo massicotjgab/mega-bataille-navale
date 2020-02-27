@@ -27,7 +27,7 @@ def start_server(host, port):
 
 def send_to_client(message):
     if addr_client is None:
-        print("Pas d'addresse client")
+        print("Pas d'adresse client")
     else:
         addr_client.sendall(message)
 
