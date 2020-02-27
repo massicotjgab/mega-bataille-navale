@@ -78,9 +78,24 @@ def test_recieve_from_client():
     serveur.addr_client.recv.assert_called_with(1024)
 
 
-# def test_send_to_client_addr_none(capsys):
-#     serveur.addr_client = None
-#     out, err = capsys.readouterr()
-#     assert out == "Pas d'adresse client\n"
-#     assert err == "Pas d'adresse client\n"
-    
+def test_send_to_client_addr_none(capsys):
+    serveur.addr_client = None
+    test = "test"
+    serveur.send_to_client(test)
+    out, err = capsys.readouterr()
+    assert out == "Pas d'adresse client\n"
+
+
+def test_send_to_client_addr_not_none():
+    serveur.addr_client = Mock()
+    test = object()
+    serveur.send_to_client(test)
+    serveur.addr_client.sendall.assert_called_with(test)
+
+
+def test_shutdown_serveur():
+    serveur.addr_client = Mock()
+    serveur.sock = Mock()
+    serveur.shutdown_server()
+    serveur.addr_client.close.assert_called_with()
+    serveur.sock.close.assert_called_with()
