@@ -3,8 +3,10 @@ import QtQuick.Layouts 1.14
 import QtQuick.Window 2.14
 import QtQuick.Controls 2.14
 
+
 Rectangle {
-    id: onecase
+    id: attOneCase
+
     Layout.minimumWidth: 40
     Layout.minimumHeight: 40
     Layout.fillWidth : true
@@ -15,3 +17,4 @@ Rectangle {
     border.width: 1
     radius: 1
 }
+

@@ -14,7 +14,7 @@ Window {
 
     property var tabColor : ["lightblue", "blue", "darkblue"]
     ColumnLayout{
-        anchors.fill : parent
+        anchors.fill : parent      
 
         SwipeView{//GESTION DES FENETRES
             id: menuStack

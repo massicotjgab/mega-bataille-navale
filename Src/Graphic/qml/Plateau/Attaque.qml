@@ -18,7 +18,7 @@ ColumnLayout{
         interactive : false
         Repeater{
             model: 3
-            Damier{}
+            AttDamier{}
         }
     }
     TabBar{
@@ -30,8 +30,8 @@ ColumnLayout{
             onClicked: attaqueStack.currentIndex = attBar.currentIndex
             background: Rectangle{
                 radius: 5
-                color: attBar.currentIndex == 0 ? "lightgrey":"black"
-                border.color: attBar.currentIndex == 0 ? "black":"white"
+                color: attBar.currentIndex === 0 ? "lightgrey":"black"
+                border.color: attBar.currentIndex === 0 ? "black":"white"
                 border.width: 3
             }
         }
@@ -41,8 +41,8 @@ ColumnLayout{
             onClicked: attaqueStack.currentIndex = attBar.currentIndex
             background: Rectangle{
                 radius: 5
-                color: attBar.currentIndex == 1 ? "lightgrey":"black"
-                border.color: attBar.currentIndex == 1 ? "black":"white"
+                color: attBar.currentIndex === 1 ? "lightgrey":"black"
+                border.color: attBar.currentIndex === 1 ? "black":"white"
                 border.width: 3
             }
         }
@@ -52,8 +52,8 @@ ColumnLayout{
             onClicked: attaqueStack.currentIndex = attBar.currentIndex
             background: Rectangle{
                 radius: 5
-                color: attBar.currentIndex == 2 ? "lightgrey":"black"
-                border.color: attBar.currentIndex == 2 ? "black":"white"
+                color: attBar.currentIndex === 2 ? "lightgrey":"black"
+                border.color: attBar.currentIndex === 2 ? "black":"white"
                 border.width: 3
             }
         }
