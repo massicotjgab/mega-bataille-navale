@@ -100,6 +100,21 @@ def test_differentiation_touche():
     Joueur1.decrypt_tram(tram)
     assert Joueur1.get_xyz_attaque(1, 2, 2) == "T"
 
+
+def test_placement_bateau_valid():
+    Joueur1 = Joueur("toto")
+    Joueur1.place_bateau("Bateau", [81, 82, 96, 97])
+    tab = [Joueur1.get_xyz_defense(8, 6, 1), Joueur1.get_xyz_defense(7, 7, 1)]
+    assert ["Bateau", "Bateau"] == tab
+
+
+def test_placement_bateau_invalid():
+    Joueur1 = Joueur("toto")
+    Joueur1.place_bateau("Bateau", [73, 74, 75, 76])
+    tab = [Joueur1.get_xyz_defense(15, 5, 1), Joueur1.get_xyz_defense(1, 6, 1)]
+    Joueur1.print_defense()
+    assert [0, 0] == tab
+
 # -------------------------- Joueur ---------------------------
 
 
