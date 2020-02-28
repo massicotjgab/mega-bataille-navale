@@ -26,7 +26,7 @@ class GameEngine(QObject):
         self.Joueur1.place_nucleaire_test() #test de placement de bateau
         tab_defense = self.Joueur1.formate_defense_gui()
         #tab_defense[0]=1
-        print (tab_defense)
+        #print (tab_defense)
         return tab_defense
 
     @Slot(result="QVariantList")
