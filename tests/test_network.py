@@ -11,14 +11,14 @@ port = 9999
 
 def test_recieve_from_serveur():
     client.sock = Mock()
-    client.recieve_from_serveur()
+    client.client_recieve_from_serveur()
     client.sock.recv.assert_called_with(1024)
 
 
 def test_send_to_serveur():
     client.sock = Mock()
     pouet = object()
-    client.send_to_serveur(pouet)
+    client.client_send_to_serveur(pouet)
     client.sock.sendall.assert_called_with(pouet)
 
 
