@@ -168,27 +168,46 @@ class Joueur:
     def formate_defense_gui(self):
         return self.defense.get_plateau_gui()
 
+    def place_bateau(self, type, array):
+        if self.check_placement_bateau(array) is False:
+            return False
+        len_array = len(array)
+        base = 15
+        for indice in range(len_array):
+            value = array[indice]
+            z = value//(base*base)+1
+            value = value - (z-1)*(base*base)
+            y = (value//base)+1
+            x = (value % base)+1
+            self.defense.set_xyz(x, y, z, type)
+
+    def check_placement_bateau(self, array):
+        len_array = len(array)
+        base = 15
+        for indice in range(len_array-1):  # check même profondeur
+            value = array[indice]
+            z_prev = value//(base*base)+1
+            value = array[indice+1]
+            z_next = value//(base*base)+1
+            if z_prev != z_next:
+                return False
+        for transition_prev in range(14, 660, 15):
+            transition_next = transition_prev + 1
+            for i in range(len_array-1):
+                if array[i] == transition_prev and array[i+1] == transition_next:
+                    return False
+        return True
+
     def place_bateau_test(self):
-        self.defense.set_xyz(1, 1, 2, "Sous_marin")
-        self.defense.set_xyz(1, 2, 2, "Sous_marin")
-        self.defense.set_xyz(2, 1, 2, "Sous_marin")
-        self.defense.set_xyz(2, 2, 2, "Sous_marin")
+        self.place_bateau("Sous_marin", [225, 226, 240, 241])
 
     def place_nucleaire_test(self):
-        self.defense.set_xyz(6, 4, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(7, 4, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(8, 4, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(9, 4, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(10, 4, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(11, 4, 2, "Sous_marin_nucleaire_1")
+        self.place_bateau("Sous_marin_nucleaire_1", [275, 276, 277, 278,
+                          279, 280])
 
     def place_nucleaire_test_coin(self):
-        self.defense.set_xyz(1, 1, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(2, 1, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(3, 1, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(4, 1, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(5, 1, 2, "Sous_marin_nucleaire_1")
-        self.defense.set_xyz(6, 1, 2, "Sous_marin_nucleaire_1")
+        self.place_bateau("Sous_marin_nucleaire_1", [225, 226, 227, 228,
+                          229, 230])
 
 
 class Bateau:
@@ -216,19 +235,19 @@ class Bateau:
 
 # def main():
 #     Joueur1 = Joueur("Cocasticox")
-#     Joueur2 = Joueur("Lacoutt")
+#     # Joueur2 = Joueur("Lacoutt")
 #
-#     Joueur1.place_bateau_test()
-#     Joueur2.place_bateau_test()
+#     Joueur1.place_bateau("Bateau", [73, 74, 75, 76])
+#     # Joueur1.place_bateau_test()
+#     # Joueur2.place_bateau_test()
 #
-#     tram = Joueur1.tirer(1, 1)
-#     tram = Joueur2.decrypt_tram(tram)
-#     Joueur1.decrypt_tram(tram)
+#     # tram = Joueur1.tirer(1, 1)
+#     # tram = Joueur2.decrypt_tram(tram)
+#     # Joueur1.decrypt_tram(tram)
 #
-#     Joueur2.print_defense()
+#     Joueur1.print_defense()
 #     print("##################################################################")
-#     Joueur1.print_attaque()
-#
+#     # Joueur1.print_attaque()
 #
 # if __name__ == ('__main__'):
 #     main()
