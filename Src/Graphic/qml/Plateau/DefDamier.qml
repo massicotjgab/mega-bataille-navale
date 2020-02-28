@@ -7,7 +7,7 @@ import QtQuick.Controls 2.14
 GridLayout {
     id: defDamier
     property string couleur : tabColor[index]
-    property var tabDef: PlayerInfo.updateDef()
+    property var tabDef: gEngineUI.updateDef()
     property int i: index
     Layout.fillWidth : true
     Layout.fillHeight : true
