@@ -6,7 +6,6 @@ import QtQuick.Controls 2.14
 //GRILLE DES PLATEAUX
 RowLayout{
     id: plateau
-    //Layout.margins : 25
     Layout.fillHeight : true
     spacing : 5
     Attaque{}

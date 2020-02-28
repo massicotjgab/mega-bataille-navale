@@ -6,7 +6,7 @@ import QtQuick.Controls 2.14
 //DAMIER
 GridLayout {
     property string couleur : tabColor[index]
-    property var tabAtt: PlayerInfo.updateAtt()
+    property var tabAtt: gEngineUI.updateAtt()
     id: attDamier
     Layout.fillWidth : true
     Layout.fillHeight : true

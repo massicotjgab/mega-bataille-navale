@@ -13,7 +13,6 @@ ColumnLayout{
         Layout.minimumHeight: 40
         Layout.fillWidth : true
         Layout.fillHeight : true
-        //color: couleur
         Text {
             text: indfinal
         }

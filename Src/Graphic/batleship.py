@@ -6,14 +6,14 @@ from PySide2.QtQml import QQmlApplicationEngine
 from interfaces import *
 
 if __name__ == "__main__":
-    pInfo = playerInfo()
+    gEngineUI = GameEngine()
 
     app = QApplication(sys.argv)
     engine = QQmlApplicationEngine()
 
     # Expose the Python object to QML
     context = engine.rootContext()
-    context.setContextProperty("PlayerInfo", pInfo)
+    context.setContextProperty("gEngineUI", gEngineUI)
 
     engine.load("Src/Graphic/qml/MainWindow.qml")
     sys.exit(app.exec_())

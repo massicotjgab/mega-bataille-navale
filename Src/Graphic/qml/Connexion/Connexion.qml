@@ -60,7 +60,7 @@ ColumnLayout{//CONNECTION
                 maximumLength : 15
                 font.pointSize: 18
                 onEditingFinished: {
-                    PlayerInfo.name(text)
+                    gEngineUI.setName(text)
                 }
             }
             TextField{
@@ -84,7 +84,7 @@ ColumnLayout{//CONNECTION
                 font.pointSize: 18
                 focus: true
                 onEditingFinished: {
-                    PlayerInfo.name(text)
+                    gEngineUI.setName(text)
                 }
                 Keys.onReturnPressed: {
                     ipChp.focus = true
@@ -98,7 +98,7 @@ ColumnLayout{//CONNECTION
                 maximumLength : 15
                 font.pointSize: 18
                 onEditingFinished: {
-                    PlayerInfo.ipadd(text)
+                    gEngineUI.setIp(text)
                 }
                 Keys.onReturnPressed: {
                     okBtn.focus = true
