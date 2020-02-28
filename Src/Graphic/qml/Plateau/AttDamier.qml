@@ -5,9 +5,10 @@ import QtQuick.Controls 2.14
 
 //DAMIER
 GridLayout {
+    id: attDamier
     property string couleur : tabColor[index]
     property var tabAtt: gEngineUI.updateAtt()
-    id: attDamier
+    property int i: index
     Layout.fillWidth : true
     Layout.fillHeight : true
     columnSpacing : 0
@@ -15,7 +16,7 @@ GridLayout {
     columns: 15
 
     Repeater{
-        id: defRepCase
+        id: attRepCase
         model : 225
         AttOneCase{}
     }
