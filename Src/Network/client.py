@@ -1,11 +1,17 @@
 import socket
-# import time
+import threading
+import queue
 
-sock = None
 send_tabl_to_serveur = bytearray(3)
 send_tabl_to_serveur[0] = 2
 send_tabl_to_serveur[1] = 8
 send_tabl_to_serveur[2] = 7
+
+sock = None
+
+queue_recieve_from_gui = queue.Queue()
+queue_send_to_gui = queue.Queue()
+queue_close_client = queue.Queue()
 
 
 def start_client(host, port):
@@ -19,18 +25,41 @@ def shutdown_client():
         sock.close()
 
 
-def recieve_from_serveur():
+def client_recieve_from_serveur():
     return sock.recv(1024)
 
 
-def send_to_serveur(send_tabl_to_serveur):
+def client_send_to_serveur(send_tabl_to_serveur):
     sock.sendall(send_tabl_to_serveur)
 
 
-if __name__ == "__main__":
-    start_client("localhost", 9999)
-    print("Sent:     {}".format(send_tabl_to_serveur))
-    # time.sleep(3)
-    send_to_serveur(send_tabl_to_serveur)
-    print(f"Recieve  {recieve_from_serveur()}")
+def gui_shutdown():
+    queue_close_client.put("stop")
+
+
+def gui_send(data):
+    queue_recieve_from_gui.put(data)
+
+
+def gui_recieve():
+    return queue_send_to_gui.get()
+
+
+def thread(host, port):
+    start_client(host, port)
+    while queue_close_client.empty():
+        try:
+            client_send_to_serveur(queue_recieve_from_gui.get(block=False))
+            queue_send_to_gui.put(client_recieve_from_serveur())
+        except queue.Empty:
+            pass
     shutdown_client()
+
+
+if __name__ == "__main__":
+    start_thread = threading.Thread(target=thread,
+                                    args=("localhost", 9999))
+    start_thread.start()
+    gui_send(send_tabl_to_serveur)
+    print(gui_recieve())
+    gui_shutdown()

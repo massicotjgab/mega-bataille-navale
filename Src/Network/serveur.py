@@ -1,6 +1,6 @@
 import socket
-
-# import time
+import threading
+import queue
 
 message = bytearray(3)
 message[0] = 3
@@ -9,7 +9,10 @@ message[2] = 3
 
 addr_client = None
 sock = None
-# https://docs.python.org/3/library/queue.html#queue.Queue.join
+
+queue_recieve_from_gui = queue.Queue()
+queue_send_to_gui = queue.Queue()
+queue_close_server = queue.Queue()
 
 
 def _get_socket():
@@ -25,14 +28,14 @@ def start_server(host, port):
     addr_client, _ = sock.accept()
 
 
-def send_to_client(message):
+def serveur_send_to_client(message):
     if addr_client is None:
         print("Pas d'adresse client")
     else:
         addr_client.sendall(message)
 
 
-def recieve_from_client():
+def serveur_recieve_from_client():
     return addr_client.recv(1024)
 
 
@@ -41,10 +44,30 @@ def shutdown_server():
     sock.close()
 
 
-if __name__ == "__main__":
-    start_server("localhost", 9999)
-    print(f"Sent:   {message}")
-    send_to_client(message)
-    print(f"Recieve: {recieve_from_client()}")
-    # time.sleep(2)
+def gui_shutdown():
+    queue_close_server.put("stop")
+
+
+def gui_send(data):
+    queue_recieve_from_gui.put(data)
+
+
+def gui_recieve():
+    return queue_send_to_gui.get()
+
+
+def thread(host, port):
+    start_server(host, port)
+    while queue_close_server.empty():
+        queue_send_to_gui.put(serveur_recieve_from_client())
+        serveur_send_to_client(queue_recieve_from_gui.get())
     shutdown_server()
+
+
+if __name__ == "__main__":
+    start_thread = threading.Thread(target=thread,
+                                    args=("localhost", 9999))
+    start_thread.start()
+    print(gui_recieve())
+    gui_send(message)
+    gui_shutdown()
