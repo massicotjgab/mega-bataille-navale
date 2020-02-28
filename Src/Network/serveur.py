@@ -64,10 +64,14 @@ def thread(host, port):
     shutdown_server()
 
 
+def start_thread(host, port):
+    run_thread = threading.Thread(target=thread,
+                                  args=(host, port))
+    run_thread.start()
+
+
 if __name__ == "__main__":
-    start_thread = threading.Thread(target=thread,
-                                    args=("localhost", 9999))
-    start_thread.start()
+    start_thread("localhost", 9999)
     print(gui_recieve())
     gui_send(message)
     gui_shutdown()

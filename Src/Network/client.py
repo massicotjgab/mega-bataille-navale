@@ -56,10 +56,14 @@ def thread(host, port):
     shutdown_client()
 
 
+def start_thread(host, port):
+    run_thread = threading.Thread(target=thread,
+                                  args=(host, port))
+    run_thread.start()
+
+
 if __name__ == "__main__":
-    start_thread = threading.Thread(target=thread,
-                                    args=("localhost", 9999))
-    start_thread.start()
+    start_thread("localhost", 9999)
     gui_send(send_tabl_to_serveur)
     print(gui_recieve())
     gui_shutdown()
