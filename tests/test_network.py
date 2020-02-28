@@ -11,14 +11,14 @@ port = 9999
 
 def test_recieve_from_serveur():
     client.sock = Mock()
-    client.recieve_from_serveur()
+    client.client_recieve_from_serveur()
     client.sock.recv.assert_called_with(1024)
 
 
 def test_send_to_serveur():
     client.sock = Mock()
     pouet = object()
-    client.send_to_serveur(pouet)
+    client.client_send_to_serveur(pouet)
     client.sock.sendall.assert_called_with(pouet)
 
 
@@ -70,14 +70,14 @@ def test_start_serveur():
 
 def test_recieve_from_client():
     serveur.addr_client = Mock()
-    serveur.recieve_from_client()
+    serveur.serveur_recieve_from_client()
     serveur.addr_client.recv.assert_called_with(1024)
 
 
 def test_send_to_client_addr_none(capsys):
     serveur.addr_client = None
     test = "test"
-    serveur.send_to_client(test)
+    serveur.serveur_send_to_client(test)
     out, err = capsys.readouterr()
     assert out == "Pas d'adresse client\n"
 
@@ -85,7 +85,7 @@ def test_send_to_client_addr_none(capsys):
 def test_send_to_client_addr_not_none():
     serveur.addr_client = Mock()
     test = object()
-    serveur.send_to_client(test)
+    serveur.serveur_send_to_client(test)
     serveur.addr_client.sendall.assert_called_with(test)
 
 
