@@ -1,4 +1,10 @@
 # GameEngine Documentation
+## Introduction
+
+La conception du moteur du jeu m'a beaucoup apporté en python. D'une part, les classes, que je ne maitrisais pas du tout. Je sais maintenant déclarer un objet, des fonctions et des variables au sein de cet objet. Le point qui a le plus péché pour nous a été l'intégration. Surtout en matière de graphique. Nous avons eu du mal à nous accorder que la manière dont nos parties allait communiquer, nous obligeant à réaliser des solution "par défaut" qui ne collait pas forcément et qu'il faudrait modifier par la suite. J'ai donc perdu beaucoup de temps et d'énergie à immaginer des solution qui au final n'ont pas servis car incompatible avec les fonctions des autres.
+La communication avec la partie réseau a été plus simple. J'ai imposé à mon collège s'occupant du réseau (Thomas Coutant) de se concentrer sur la communication réseau en lui assurant le fait que je lui fournirait les tram toutes prètes. Il n'aura plus qu'a les envoyer.
+
+
 ## Planification
 ### Prévisionnel
 ![](images/gantt_previsionnel_gameengine.png)
@@ -55,7 +61,7 @@ Ensuite, il existe un code pour chaque case, ce code diffère légèrement s'il 
 #### Attaque
 
 | Caractère     |Correspondance   |
-| ------------- |: -------------: |
+| :---:         | :---:           |
 | 0             | Inexploré       |
 | X             | Coup dans l'eau |
 | T             | Touché          |
@@ -66,10 +72,10 @@ tab_attaque = self.Joueur1.formate_attaque_gui()
 
 #### Défense
 | Caractère     |Correspondance   |
-| ------------- |: -------------: |
+| :---:         | :---:           |
 | 0             | Eau             |
 | X             | Coup dans l'eau |
-| X_NomBateau   | Touché          |
+| X_NomBateau   | NomBateau touché|
 
 ```
 tab_defense = self.Joueur1.formate_defense_gui()
