@@ -10,11 +10,11 @@ La communication avec la partie réseau a été plus simple. J'ai imposé à mon
 
 ## Difficultés
 Voici une liste des trois plus grosses difficulités que j'ai rencontré lors de ce projet.
-###### L'organisation
+##### L'organisation
 L'oganisation de ma partie s'est révélé relativement compliqué. D'autant plus que le système d'objet et de classes était relativement nouveau pour moi. J'ai donc du me reprendre à plusieurs fois afin de réaliser une système qui soit compréhensible et fonctionnel.
-###### La communication
+##### La communication
 La communication a été un des plus gros frein lors de ce projet. En effet, j'ai avancé plus vite que l'interface graphique, m'obligeant à prendre des décisions qui ne ce sont pas révélé efficaces, avec l'obligation de corriger le tout par la suite.
-###### Git
+##### Git
 Ce projet fut notre premier projet collaboratif sur git. Et ce ne fut pas sans ratés. Entre la prise en main des pull requests et des branches, il a fallu un bon moment pour s'y accomodé. J'estime que c'est chose faite maintenant et je comprends bien mieux ce système.
 
 ## Notions apprises
@@ -111,4 +111,4 @@ Joueur1.place_bateau("Sous_marin", [225, 226, 240, 241])
 
 ## Conclusion
 
-Pour conclure, j'ai trouvé ce projet très interessant, me permettant d'apprendre plus en profondeur des notions de python de git que je ne maîtrisais pas. Cependant, j'aurai aimé avoir le temps de me plonger dans les parties des autres membres de mon équipe afin de les aider et d'apprendre avec eux. Ce qui était compliqué étant donné le temps aloué. 
+Pour conclure, j'ai trouvé ce projet très interessant, me permettant d'apprendre plus en profondeur des notions de python de git que je ne maîtrisais pas. Cependant, j'aurai aimé avoir le temps de me plonger dans les parties des autres membres de mon équipe afin de les aider et d'apprendre avec eux. Ce qui était compliqué étant donné le temps aloué.
