@@ -1,5 +1,8 @@
 # Mega bataille navale
 
+Ce projet d'étude a été orchestré par vpoulailleau
+* https://github.com/vpoulailleau/mega-bataille-navale.git
+
 ## Jeu
 
 * Méga bataille navale
