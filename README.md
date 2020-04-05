@@ -1,5 +1,8 @@
 # Mega bataille navale
 
+Ce projet d'étude a été orchestré par vpoulailleau
+* https://github.com/vpoulailleau/mega-bataille-navale.git
+
 ## Jeu
 
 * Méga bataille navale
@@ -103,3 +106,8 @@ Le client commence, il tire et reçoit ensuite une réponse du serveur, puis le 
 * Poetry
   * https://python-poetry.org/
   * https://python-poetry.org/docs/basic-usage/
+
+## Liens vers les réalisations
+
+* Groupe constitué de Samuel Huet, Thomas Coutant, Vincent Villedieux et Jean-Gabriel Massicot
+  * https://github.com/massicotjgab/mega-bataille-navale.git
