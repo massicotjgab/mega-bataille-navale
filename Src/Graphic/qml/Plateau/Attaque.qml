@@ -36,7 +36,7 @@ ColumnLayout{
             }
         }
         TabButton{
-            text: "Millieu"
+            text: "Milieu"
             font.pointSize: 18
             onClicked: attaqueStack.currentIndex = attBar.currentIndex
             background: Rectangle{
